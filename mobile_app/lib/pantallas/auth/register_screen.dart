@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile_app/_componentes/form_button.dart';
 import 'package:mobile_app/_componentes/input_field.dart';
 import 'package:mobile_app/_componentes/navigation_link.dart';
-import 'package:mobile_app/pantallas/auth/login/login_screen.dart';
+import 'package:mobile_app/pantallas/auth/login_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
   @override

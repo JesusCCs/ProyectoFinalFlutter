@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mobile_app/_componentes/form_button.dart';
 import 'package:mobile_app/_componentes/input_field.dart';
 import 'package:mobile_app/_componentes/navigation_link.dart';
-import 'package:mobile_app/pantallas/auth/forgot_password/forgot_screen.dart';
-import 'package:mobile_app/pantallas/auth/register/register_screen.dart';
+import 'package:mobile_app/pantallas/auth/forgot_screen.dart';
+import 'package:mobile_app/pantallas/auth/register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
