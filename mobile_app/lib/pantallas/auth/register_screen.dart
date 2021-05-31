@@ -15,6 +15,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
 
+    final emailController = TextEditingController();
+    final passwordController = TextEditingController();
+    final confirmPasswordController = TextEditingController();
+
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -42,17 +46,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
             InputField(
               labelText: "Email",
               keyboardType: TextInputType.emailAddress,
+              controller: emailController,
             ),
             SizedBox(height: screenHeight * .025),
             InputField(
-              labelText: "Contraseña",
-              obscureText: true,
-            ),
+                labelText: "Contraseña",
+                obscureText: true,
+                controller: passwordController),
             SizedBox(height: screenHeight * .025),
             InputField(
-              labelText: "Repetir contraseña",
-              obscureText: true,
-            ),
+                labelText: "Repetir contraseña",
+                obscureText: true,
+                controller: confirmPasswordController),
             SizedBox(height: screenHeight * .075),
             FormButton(text: "Registrarme"),
             SizedBox(height: screenHeight * .05),

@@ -13,6 +13,9 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   late double screenHeight;
 
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     screenHeight = MediaQuery.of(context).size.height;
@@ -44,11 +47,13 @@ class _LoginScreenState extends State<LoginScreen> {
             InputField(
               labelText: "Email",
               keyboardType: TextInputType.emailAddress,
+              controller: emailController
             ),
             SizedBox(height: screenHeight * .05),
             InputField(
               labelText: "Contraseña",
               obscureText: true,
+              controller: passwordController
             ),
             Align(
               alignment: Alignment.centerRight,

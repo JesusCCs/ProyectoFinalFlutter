@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_app/pantallas/listado/listado_screen.dart';
+import 'package:mobile_app/pantallas/auth/login_screen.dart';
 
 import '_services/_base.dart';
 
@@ -22,6 +22,6 @@ class MyApp extends StatelessWidget {
 class AuthenticationWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new ListadoScreen();
+    return new LoginScreen();
   }
 }

@@ -10,6 +10,8 @@ class ForgotScreen extends StatefulWidget {
 }
 
 class _ForgotScreenState extends State<ForgotScreen> {
+  final emailController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;
@@ -41,6 +43,7 @@ class _ForgotScreenState extends State<ForgotScreen> {
             InputField(
               labelText: "Email",
               keyboardType: TextInputType.emailAddress,
+              controller: emailController,
             ),
             SizedBox(height: screenHeight * .025),
             SizedBox(height: screenHeight * .075),
