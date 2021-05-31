@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_app/pantallas/login/login_screen.dart';
+import 'package:mobile_app/pantallas/auth/login/login_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -21,11 +21,6 @@ class MyApp extends StatelessWidget {
 class AuthenticationWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new LoginScreen(
-      onSubmitted: (String email, String password) {
-        print(email);
-        print(password);
-      },
-    );
+    return new LoginScreen();
   }
 }

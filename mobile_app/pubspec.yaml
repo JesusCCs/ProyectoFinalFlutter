@@ -24,8 +24,8 @@ dependencies:
   flutter:
     sdk: flutter
 
+  flutter_riverpod: ^0.14.0+3
 
-  # Iconos y fuentes
   cupertino_icons: ^1.0.3
 
 dev_dependencies:

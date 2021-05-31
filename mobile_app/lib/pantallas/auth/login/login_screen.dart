@@ -2,13 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:mobile_app/_componentes/form_button.dart';
 import 'package:mobile_app/_componentes/input_field.dart';
 import 'package:mobile_app/_componentes/navigation_link.dart';
-import 'package:mobile_app/pantallas/register/register_screen.dart';
+import 'package:mobile_app/pantallas/auth/forgot_password/forgot_screen.dart';
+import 'package:mobile_app/pantallas/auth/register/register_screen.dart';
 
 class LoginScreen extends StatefulWidget {
-  final Function(String email, String password)? onSubmitted;
-
-  LoginScreen({this.onSubmitted});
-
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
@@ -56,7 +53,7 @@ class _LoginScreenState extends State<LoginScreen> {
             Align(
               alignment: Alignment.centerRight,
               child: NavigationLink(
-                  text: '¿Olvidaste la contraseña?', screen: RegisterScreen()),
+                  text: '¿Olvidaste la contraseña?', screen: ForgotScreen()),
             ),
             SizedBox(height: screenHeight * .075),
             FormButton(text: "Iniciar sesión"),
