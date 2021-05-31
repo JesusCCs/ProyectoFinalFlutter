@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:mobile_app/_componentes/form_button.dart';
 import 'package:mobile_app/_componentes/navigation_link.dart';
+import 'package:mobile_app/_services/auth_service.dart';
 import 'package:mobile_app/pantallas/auth/forgot_screen.dart';
 import 'package:mobile_app/pantallas/auth/register_screen.dart';
 
@@ -25,6 +26,10 @@ class _LoginScreenState extends State<LoginScreen> {
     final email = _formKey.currentState!.fields['email']!.value;
     final pass = _formKey.currentState!.fields['pass']!.value;
 
+    final isLogged = await AuthService.login(email, pass);
+
+
+
     FocusScope.of(context).unfocus();
   }
 
@@ -44,10 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   padding: EdgeInsets.only(top: 50.0),
                   child: Text(
                     "Bienvenido,",
-                    style: TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
                   )),
               Padding(
                   padding: EdgeInsets.symmetric(vertical: 8.0),
@@ -60,29 +62,25 @@ class _LoginScreenState extends State<LoginScreen> {
                   )),
               SizedBox(height: screenHeight * .07),
               FormBuilderTextField(
-                name: 'email',
-                decoration: InputDecoration(
-                  labelText: 'Email',
-                  errorText: _emailError
-                ),
-                keyboardType: TextInputType.emailAddress,
-                validator: FormBuilderValidators.compose([
-                  FormBuilderValidators.email(context),
-                  FormBuilderValidators.required(context),
-                  FormBuilderValidators.minLength(context, 3)
-                ])
-              ),
+                  name: 'email',
+                  decoration: InputDecoration(
+                      labelText: 'Email', errorText: _emailError),
+                  keyboardType: TextInputType.emailAddress,
+                  validator: FormBuilderValidators.compose([
+                    FormBuilderValidators.email(context),
+                    FormBuilderValidators.required(context),
+                    FormBuilderValidators.minLength(context, 3)
+                  ])),
               SizedBox(height: screenHeight * .05),
               FormBuilderTextField(
-                name: 'pass',
+                  name: 'pass',
                   decoration: InputDecoration(
-                      labelText: 'Contraseña',
+                    labelText: 'Contraseña',
                   ),
-                validator: FormBuilderValidators.compose([
-                  FormBuilderValidators.required(context),
-                  FormBuilderValidators.minLength(context, 5)
-                ])
-              ),
+                  validator: FormBuilderValidators.compose([
+                    FormBuilderValidators.required(context),
+                    FormBuilderValidators.minLength(context, 5)
+                  ])),
               SizedBox(height: screenHeight * .015),
               Align(
                 alignment: Alignment.centerRight,
