@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app/_models/gimnasio.dart';
-import 'package:mobile_app/_themes/colors.dart';
+import 'package:mobile_app/pantallas/detalles/datails_screen.dart';
 
 class GymCard extends StatelessWidget {
   GimnasioList item;
@@ -11,37 +11,44 @@ class GymCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       clipBehavior: Clip.antiAlias,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
       child: Column(
         children: [
-          Stack(
-            children: [
-              Ink.image(
-                image: NetworkImage(item.logo),
-                colorFilter: ColorFilters.greyscale,
-                height: 240,
-                fit: BoxFit.cover,
+          ListTile(
+            title: Padding(
+              padding:,
+              child: Text(item.nombre, style: TextStyle(fontSize: 18)),
+            ),
+            subtitle: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Text(
+                "Tarifa: ${item.tarifa} €/mes",
+                style: TextStyle(
+                    color: Colors.black.withOpacity(0.6), fontSize: 18),
               ),
-              Positioned(
-                bottom: 16,
-                right: 16,
-                left: 16,
-                child: Text(
-                  item.nombre,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                    fontSize: 24,
-                  ),
-                ),
-              ),
-            ],
+            ),
+          ),
+          Image.network(item.logo),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+            child: Text(
+              item.descripcion,
+              style: TextStyle(color: Colors.black.withOpacity(0.6)),
+            ),
           ),
           Padding(
-            padding: EdgeInsets.all(16).copyWith(bottom: 0),
-            child: Text(item.descripcion, style: TextStyle(fontSize: 16)),
-          ),
-          ElevatedButton(onPressed: () => {}, child: Text('Botón'))
+              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+              child: ButtonBar(
+                alignment: MainAxisAlignment.start,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => DatailsScreen(id: item.id)));
+                    },
+                    child: const Text('DETALLES'),
+                  ),
+                ],
+              ))
         ],
       ),
     );

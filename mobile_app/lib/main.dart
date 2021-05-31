@@ -11,8 +11,6 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-
     return new MaterialApp(
       title: 'Sweet',
       theme: new ThemeData(primaryColor: Color.fromRGBO(58, 66, 86, 1.0)),

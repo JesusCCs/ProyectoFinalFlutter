@@ -5,14 +5,18 @@ abstract class GimnasioService {
   static Future<List<GimnasioList>> getList() async {
     List<GimnasioList> list;
 
-    var dio = Base.dio;
-
-    var response = await dio.get('/gimnasios');
+    var response = await Base.dio.get('/gimnasios');
 
     list = (response.data as List<dynamic>)
         .map((e) => GimnasioList.fromJson(e))
         .toList();
 
     return list;
+  }
+
+  static Future<GimnasioDetails> getDetails(String id) async {
+    var response = await Base.dio.get('/gimnasios/$id');
+
+    return GimnasioDetails.fromJson(response.data);
   }
 }
