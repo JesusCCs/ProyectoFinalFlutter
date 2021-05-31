@@ -3,7 +3,7 @@ import 'package:mobile_app/_models/gimnasio.dart';
 import 'package:mobile_app/pantallas/detalles/datails_screen.dart';
 
 class GymCard extends StatelessWidget {
-  GimnasioList item;
+  final GimnasioList item;
 
   GymCard({required this.item});
 

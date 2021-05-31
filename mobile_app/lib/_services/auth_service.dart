@@ -1,4 +1,3 @@
-import 'package:mobile_app/_models/gimnasio.dart';
 import '_base.dart';
 
 abstract class AuthService {
@@ -15,5 +14,14 @@ abstract class AuthService {
   }
 
 
+  static Future<bool> create(username, email, pass, confirmPass) async {
+    var response = await Base.dio.post('/usuarios', data: {
+      'UserName': username,
+      'Email': email,
+      'Password' : pass,
+      'ConfirmedPassword': confirmPass
+    }).catchError((e) => print(e));
 
+    return response.statusCode == 200;
+  }
 }

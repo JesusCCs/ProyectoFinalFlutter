@@ -19,6 +19,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
     final passwordController = TextEditingController();
     final confirmPasswordController = TextEditingController();
 
+    // CoolAlert.show(
+    //   context: context,
+    //   type: CoolAlertType.success,
+    //   title: "¡Cuenta creada!",
+    //   text: "Ahora solo falta que confirmes tu email mediante el correo que te hemos enviado",
+    // );
+
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
