@@ -13,6 +13,12 @@ abstract class AuthService {
     return response.statusCode == 200;
   }
 
+  static Future<void> forgot(String email) async {
+    await Base.dio.post('/auth/forgot-password', data: {
+      'Email': email
+    }).catchError((e) => print(e));
+  }
+
 
   static Future<bool> create(username, email, pass, confirmPass) async {
     var response = await Base.dio.post('/usuarios', data: {
