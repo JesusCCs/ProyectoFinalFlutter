@@ -15,7 +15,7 @@ class GymCard extends StatelessWidget {
         children: [
           ListTile(
             title: Padding(
-              padding:,
+              padding: const EdgeInsets.only(top: 12.0),
               child: Text(item.nombre, style: TextStyle(fontSize: 18)),
             ),
             subtitle: Padding(
