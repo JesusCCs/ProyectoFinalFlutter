@@ -1,11 +1,9 @@
-import 'dart:ffi';
-
 class GimnasioList {
   String id;
   String logo;
   String nombre;
   String descripcion;
-  Float tarifa;
+  double tarifa;
 
   GimnasioList(
       {required this.id,
@@ -31,7 +29,7 @@ class GimnasioDetails {
   String nombre;
   String descripcion;
   String direccion;
-  Float tarifa;
+  double tarifa;
 
   GimnasioDetails({
     required this.id,

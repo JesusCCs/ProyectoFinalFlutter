@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app/pantallas/listado/listado_screen.dart';
 
+import '_services/_base.dart';
+
 void main() {
+  Base.init();
   runApp(MyApp());
 }
 
