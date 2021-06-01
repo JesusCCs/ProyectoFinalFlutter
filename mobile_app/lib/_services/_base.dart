@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
+import 'package:mobile_app/_services/error_service.dart';
 
 abstract class Base {
   static const URL = "https://localhost:5001"; // "https://10.0.2.2:5001"
@@ -17,11 +20,12 @@ abstract class Base {
         onResponse:(response,handler) {
           print("RESPONSE--");
           print(response.data);
+
           return handler.next(response);
         },
         onError: (DioError e, handler) {
-          print("ERROR--");
-          print(e.response);
+
+
           return  handler.next(e);
         }
     ));

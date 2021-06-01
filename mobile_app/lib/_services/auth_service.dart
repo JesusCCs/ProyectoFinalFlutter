@@ -1,3 +1,6 @@
+import 'package:dio/dio.dart';
+import 'package:mobile_app/_services/error_service.dart';
+
 import '_base.dart';
 
 abstract class AuthService {
@@ -6,9 +9,7 @@ abstract class AuthService {
     var response = await Base.dio.post('/usuarios/login', data: {
       'UserNameOrEmail': email,
       'Password': pass
-    }).catchError((e) => print(e));
-
-    print(response.data);
+    }).catchError((e) => ErrorService.dio(e));
 
     return response.statusCode == 200;
   }
@@ -16,7 +17,7 @@ abstract class AuthService {
   static Future<void> forgot(String email) async {
     await Base.dio.post('/auth/forgot-password', data: {
       'Email': email
-    }).catchError((e) => print(e));
+    }).catchError((e) => ErrorService.dio(e));
   }
 
 
@@ -26,7 +27,7 @@ abstract class AuthService {
       'Email': email,
       'Password' : pass,
       'ConfirmedPassword': confirmPass
-    }).catchError((e) => print(e));
+    }).catchError((e) => ErrorService.dio(e));
 
     return response.statusCode == 200;
   }
