@@ -1,5 +1,6 @@
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:mobile_app/_services/error_service.dart';
+import 'package:mobile_app/_services/storage_service.dart';
 
 import '_base.dart';
 
@@ -13,8 +14,7 @@ abstract class AuthService {
 
     if (response.statusCode != 200) return false;
 
-
-
+    await StorageService.setSession(response.data);
 
     return true;
   }
