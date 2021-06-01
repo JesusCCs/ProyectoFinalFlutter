@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app/_models/gimnasio.dart';
-import 'package:mobile_app/pantallas/detalles/datails_screen.dart';
+import 'package:mobile_app/pantallas/detalles/details_screen.dart';
 
 class GymCard extends StatelessWidget {
   final GimnasioList item;
@@ -43,7 +43,7 @@ class GymCard extends StatelessWidget {
                   TextButton(
                     onPressed: () {
                       Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => DatailsScreen(id: item.id)));
+                          MaterialPageRoute(builder: (context) => DetailsScreen(id: item.id)));
                     },
                     child: const Text('DETALLES'),
                   ),

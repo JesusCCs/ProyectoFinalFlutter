@@ -3,16 +3,16 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:mobile_app/_models/gimnasio.dart';
 import 'package:mobile_app/_services/gimnasio_service.dart';
 
-class DatailsScreen extends StatefulWidget {
+class DetailsScreen extends StatefulWidget {
   final String id;
 
-  DatailsScreen({required this.id});
+  DetailsScreen({required this.id});
 
   @override
-  _DatailsScreenState createState() => _DatailsScreenState();
+  _DetailsScreenState createState() => _DetailsScreenState();
 }
 
-class _DatailsScreenState extends State<DatailsScreen> {
+class _DetailsScreenState extends State<DetailsScreen> {
   late GimnasioDetails item;
 
   Future<bool> getData() async {
