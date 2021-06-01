@@ -5,6 +5,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:mobile_app/_componentes/form_button.dart';
 import 'package:mobile_app/_componentes/navigation_link.dart';
 import 'package:mobile_app/_services/auth_service.dart';
+import 'package:mobile_app/_services/error_service.dart';
 import 'package:mobile_app/pantallas/auth/login_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -15,25 +16,47 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
   final _formKey = GlobalKey<FormBuilderState>();
 
-  String? _emailError;
   String? _userError;
+  String? _emailError;
+  String? _passError;
+  String? _passConfirmError;
+  bool _customErrors = false;
 
   submit() async {
-    final isValid = _formKey.currentState!.saveAndValidate();
 
-    if (!isValid) return;
+    bool isValid = _formKey.currentState!.saveAndValidate();
 
-    setState(() => {_emailError = null, _userError = null});
+    if (!isValid && !_customErrors) return;
 
-    final username = _formKey.currentState!.fields['username']!.value;
-    final email = _formKey.currentState!.fields['email']!.value;
-    final pass = _formKey.currentState!.fields['pass']!.value;
-    final confirmPass = _formKey.currentState!.fields['confirmPass']!.value;
+    setState(() => {
+      _customErrors = false,
+      _userError = null,
+      _emailError = null,
+      _passError = null,
+      _passConfirmError = null,
+    });
 
-    final isCreated =
-        await AuthService.create(username, email, pass, confirmPass);
+    ErrorService.clear();
 
-    if (!isCreated) return;
+    final isCreated = await AuthService.create(_formKey.currentState!.fields);
+
+    if (!isCreated) {
+      var dynamicErrors = ErrorService.showGeneralAndGetDynamic(context, _formKey);
+
+      if (dynamicErrors != null) {
+        setState(() => {
+          _userError = dynamicErrors[0],
+          _emailError = dynamicErrors[1],
+          _passError = dynamicErrors[2],
+          _passConfirmError = dynamicErrors[3],
+          _customErrors = true
+        });
+      } else {
+
+      }
+
+      return;
+    }
 
     FocusScope.of(context).unfocus();
 
@@ -77,7 +100,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   )),
               SizedBox(height: screenHeight * .07),
               FormBuilderTextField(
-                  name: 'username',
+                  name: 'UserName',
                   decoration: InputDecoration(
                       labelText: 'Usuario', errorText: _userError),
                   validator: FormBuilderValidators.compose([
@@ -86,7 +109,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ])),
               SizedBox(height: screenHeight * .025),
               FormBuilderTextField(
-                  name: 'email',
+                  name: 'Email',
                   decoration: InputDecoration(
                       labelText: 'Email', errorText: _emailError),
                   validator: FormBuilderValidators.compose([
@@ -96,39 +119,35 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ])),
               SizedBox(height: screenHeight * .025),
               FormBuilderTextField(
-                  name: 'pass',
-                  decoration: InputDecoration(
-                    labelText: 'Contraseña',
-                  ),
+                  name: 'Password',
+                  decoration: InputDecoration(labelText: 'Contraseña', errorText: _passError),
                   obscureText: true,
                   validator: FormBuilderValidators.compose([
                     FormBuilderValidators.required(context),
                     FormBuilderValidators.minLength(context, 5),
                     (val) {
                       if (val !=
-                          _formKey.currentState!.fields['confirmPass']!.value)
+                          _formKey.currentState!.fields['ConfirmedPassword']!.value)
                         return 'Las contraseñas no coinciden';
                       return null;
                     }
                   ])),
               SizedBox(height: screenHeight * .025),
               FormBuilderTextField(
-                  name: 'confirmPass',
-                  decoration: InputDecoration(
-                    labelText: 'Repita la contraseña',
-                  ),
+                  name: 'ConfirmedPassword',
+                  decoration: InputDecoration(labelText: 'Repita la contraseña', errorText: _passConfirmError),
                   obscureText: true,
                   validator: FormBuilderValidators.compose([
                     FormBuilderValidators.required(context),
                     FormBuilderValidators.minLength(context, 5),
                     (val) {
-                      if (val != _formKey.currentState!.fields['pass']!.value)
+                      if (val != _formKey.currentState!.fields['Password']!.value)
                         return 'Las contraseñas no coinciden';
                       return null;
                     }
                   ])),
               SizedBox(height: screenHeight * .075),
-              FormButton(text: "Registrarme", onPressed: () => submit()),
+              FormButton(text: "Registrarme", onPressed: () { submit(); }),
               SizedBox(height: screenHeight * .05),
               NavigationLink(text: 'Iniciar Sesión', screen: LoginScreen())
             ],

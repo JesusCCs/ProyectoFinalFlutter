@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:mobile_app/_services/error_service.dart';
 
 import '_base.dart';
@@ -21,12 +22,12 @@ abstract class AuthService {
   }
 
 
-  static Future<bool> create(username, email, pass, confirmPass) async {
+  static Future<bool> create(Map<String, FormBuilderFieldState<FormBuilderField<dynamic>, dynamic>> inputs) async {
     var response = await Base.dio.post('/usuarios', data: {
-      'UserName': username,
-      'Email': email,
-      'Password' : pass,
-      'ConfirmedPassword': confirmPass
+      'UserName': inputs["UserName"]!.value,
+      'Email': inputs["Email"]!.value,
+      'Password' : inputs["Password"]!.value,
+      'ConfirmedPassword': inputs["ConfirmedPassword"]!.value
     }).catchError((e) => ErrorService.dio(e));
 
     return response.statusCode == 200;

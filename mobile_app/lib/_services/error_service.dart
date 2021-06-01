@@ -1,60 +1,60 @@
+import 'dart:async';
 
-
+import 'package:cool_alert/cool_alert.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 abstract class ErrorService {
 
-  static List<Error> errors = new List<Error>.empty();
+  static String? generalError;
+  static dynamic dynamicErrors;
 
-  static dio(DioError e) {
+  static FutureOr<Response> dio(DioError e) {
 
     if (e.response == null) {
-      add(new Map.fromEntries([
-        new MapEntry('general', ['Error al intentar conectarse con el servidor'])
-      ]));
-
-      return;
+      generalError = "Error al intentar conectarse al servidor";
+      return new Response(requestOptions: new RequestOptions(path: ''));
     }
 
     if (e.response!.statusCode == 500) {
-      add(new Map.fromEntries([
-        new MapEntry('general', ['Error interno del servidor'])
-      ]));
-
-      return;
+      generalError = 'Error interno del servidor';
+      return e.response!;
     }
 
     if (e.response!.statusCode == 400) {
-      print('ERROR 400');
-      print(e.response!.data['errors'] is Map);
-      add(e.response!.data['errors']);
-      print('BUENA');
-      return;
+      dynamicErrors = e.response!.data["errors"];
     }
 
-
+    return e.response!;
   }
 
   static clear() {
-    errors.clear();
+    generalError = null;
+    dynamicErrors = null;
   }
 
-  static showInForm() {
-    if (errors.isEmpty) return;
+  static dynamic showGeneralAndGetDynamic(BuildContext context, GlobalKey<FormBuilderState> form) {
 
-    print(errors.first.message);
-  }
+    if (generalError != null) {
+      CoolAlert.show(
+          context: context,
+          type: CoolAlertType.error,
+          title: "Error",
+          text: generalError
+      );
 
-  static void add(Map<String, List<String>> newErrors) {
-    newErrors.forEach((key, value) {
-      ErrorService.errors.add(new Error(key, value.first));
+      return null;
+    }
+
+    List<String?> errors = List<String?>.filled(form.currentState!.fields.length, null);
+
+    int i = 0;
+    form.currentState!.fields.forEach((key, value) {
+      errors[i] = dynamicErrors[key] != null ? (dynamicErrors[key] as List<dynamic>).first : null;
+      i++;
     });
+
+    return errors;
   }
-}
-
-class Error {
-  Error(String key, String message);
-
-  String get key => this.key;
-  String get message => this.message;
 }
