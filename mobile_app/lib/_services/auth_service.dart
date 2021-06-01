@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:mobile_app/_services/error_service.dart';
 
@@ -12,7 +11,12 @@ abstract class AuthService {
       'Password': pass
     }).catchError((e) => ErrorService.dio(e));
 
-    return response.statusCode == 200;
+    if (response.statusCode != 200) return false;
+
+
+
+
+    return true;
   }
 
   static Future<void> forgot(String email) async {

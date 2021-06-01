@@ -51,8 +51,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
           _passConfirmError = dynamicErrors[3],
           _customErrors = true
         });
-      } else {
-
       }
 
       return;

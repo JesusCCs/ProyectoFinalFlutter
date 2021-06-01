@@ -12,6 +12,8 @@ abstract class ErrorService {
 
   static FutureOr<Response> dio(DioError e) {
 
+    print(e.response.toString());
+
     if (e.response == null) {
       generalError = "Error al intentar conectarse al servidor";
       return new Response(requestOptions: new RequestOptions(path: ''));
