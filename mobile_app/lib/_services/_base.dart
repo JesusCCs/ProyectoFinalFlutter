@@ -16,12 +16,12 @@ abstract class Base {
         },
         onResponse:(response,handler) {
           print("RESPONSE--");
-          print(response);
+          print(response.data);
           return handler.next(response);
         },
         onError: (DioError e, handler) {
           print("ERROR--");
-          print(e);
+          print(e.response);
           return  handler.next(e);
         }
     ));
