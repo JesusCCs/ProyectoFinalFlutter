@@ -1,5 +1,7 @@
 import 'dart:ui';
 
+import 'package:flutter/material.dart';
+
 class ColorFilters {
   static final greyscale = ColorFilter.matrix(<double>[
     /// greyscale filter
@@ -11,8 +13,8 @@ class ColorFilters {
 }
 
 class ThemeColors {
-  static final darkBg = const Color.fromRGBO(38, 38, 38, 15);
-  static final textGray = const Color.fromRGBO(38, 38, 38, 15);
-  static final textLight = const Color.fromRGBO(251, 251, 251, 98);
-  static final textHighlighted = const  Color.fromRGBO(255, 169, 0, 100);
+  static final darkBg = const Color.fromRGBO(38, 38, 38, 1);
+  static final textGray = const Color.fromRGBO(220, 220, 220, 0.71);
+  static final textLight = Colors.white;
+  static final textHighlighted = const  Color.fromRGBO(255, 169, 0, 1);
 }
