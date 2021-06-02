@@ -9,6 +9,7 @@ class StorageService {
   static FlutterSecureStorage secureStorage = FlutterSecureStorage();
 
   static Future<void> setSession(session) async {
+    print('SET SESSION: ${session["id"]}');
     await secureStorage.write(key: USER_ID, value: session["id"]);
     await secureStorage.write(key: TOKEN_KEY, value: session["accessToken"]);
     await secureStorage.write(

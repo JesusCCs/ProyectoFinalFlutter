@@ -8,12 +8,26 @@ import 'package:mobile_app/pantallas/listado/listado_screen.dart';
 
 import '_services/_base.dart';
 
-void main() {
+Future<void> main() async {
   Base.init();
-  runApp(MyApp());
+  dynamic id;
+
+  try {
+    id = await StorageService.getId();
+  } catch(e) {
+    id = null;
+  }
+
+  runApp(MyApp(id: id));
 }
 
 class MyApp extends StatelessWidget {
+
+  final String? id;
+
+  const MyApp({Key? key, this.id}) : super(key: key);
+
+
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
@@ -26,46 +40,24 @@ class MyApp extends StatelessWidget {
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
       ],
-      theme: new ThemeData(primaryColor: Color.fromRGBO(58, 66, 86, 1.0)),
-      home: new AuthenticationWrapper(),
+      debugShowCheckedModeBanner: false,
+      home: AuthenticationWrapper(id: id),
     );
   }
 }
 
-class AuthenticationWrapper extends StatefulWidget {
-  @override
-  _AuthenticationWrapperState createState() => _AuthenticationWrapperState();
-}
+class AuthenticationWrapper extends StatelessWidget {
 
-class _AuthenticationWrapperState extends State<AuthenticationWrapper> {
-
-  @override
-  void initState() {
-    super.initState();
-
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
-      checkLogin();
-    });
-  }
-
-  Future<void> checkLogin() async {
-    final id = await StorageService.getId();
-    print('ID: ' + (id ?? '0'));
-
-    if (id != null) {
-      Navigator.push(context, MaterialPageRoute(builder: (_) => ListadoScreen()));
-      return;
-    }
-
-    Navigator.push(context, MaterialPageRoute(builder: (_) => LoginScreen()));
-  }
-
+  final String? id;
+  const AuthenticationWrapper({Key? key, this.id}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return SpinKitRipple(
-      color: Colors.deepOrange,
-      size: 300.0,
-    );
+
+    if (id == null) {
+      return LoginScreen();
+    }
+
+    return ListadoScreen();
   }
 }
