@@ -40,7 +40,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
     if (!isLogged) {
       var dynamicErrors =
-          ErrorService.showGeneralAndGetDynamic(context, _formKey);
+          ErrorService.showGeneralAndGetDynamic(context, form: _formKey);
 
       if (dynamicErrors != null) {
         setState(() => {

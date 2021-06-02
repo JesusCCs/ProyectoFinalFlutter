@@ -36,7 +36,7 @@ abstract class ErrorService {
     dynamicErrors = null;
   }
 
-  static dynamic showGeneralAndGetDynamic(BuildContext context, GlobalKey<FormBuilderState> form) {
+  static dynamic showGeneralAndGetDynamic(BuildContext context, {GlobalKey<FormBuilderState>? form}) {
 
     if (generalError != null) {
       CoolAlert.show(
@@ -48,6 +48,8 @@ abstract class ErrorService {
 
       return null;
     }
+
+    if (form == null) return;
 
     List<String?> errors = List<String?>.filled(form.currentState!.fields.length, null);
 

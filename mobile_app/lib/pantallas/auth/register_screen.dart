@@ -41,7 +41,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     final isCreated = await AuthService.create(_formKey.currentState!.fields);
 
     if (!isCreated) {
-      var dynamicErrors = ErrorService.showGeneralAndGetDynamic(context, _formKey);
+      var dynamicErrors = ErrorService.showGeneralAndGetDynamic(context, form: _formKey);
 
       if (dynamicErrors != null) {
         setState(() => {

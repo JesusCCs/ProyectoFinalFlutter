@@ -3,6 +3,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:mobile_app/_componentes/gym_card.dart';
 import 'package:mobile_app/_componentes/search_bar.dart';
 import 'package:mobile_app/_models/gimnasio.dart';
+import 'package:mobile_app/_services/error_service.dart';
 import 'package:mobile_app/_services/gimnasio_service.dart';
 
 class ListadoScreen extends StatefulWidget {
@@ -11,52 +12,50 @@ class ListadoScreen extends StatefulWidget {
 }
 
 class _ListadoScreenState extends State<ListadoScreen> {
-  List<GimnasioList>? list = [];
+
+  List<GimnasioList>? list;
+  List<GimnasioList>? originalList;
+
   String search = '';
 
   @override
   void initState() {
     super.initState();
+    getData();
   }
 
-  Future<bool> getData() async {
-    list = await GimnasioService.getList();
-    return true;
+  Future getData() async {
+    final list = await GimnasioService.getList();
+
+    if (list == null) {
+      ErrorService.showGeneralAndGetDynamic(context);
+      return;
+    }
+    originalList = List.from(list);
+    setState(() => this.list = list);
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: FutureBuilder<bool>(
-        future: getData(),
-        builder: (context, snapshot) {
-          print(snapshot);
-          if (!snapshot.hasData)
-            return SpinKitRipple(
-              color: Colors.deepOrange,
-              size: 300.0,
-            );
-
-          return Scaffold(
-              appBar: AppBar(
-                title: Text("Sweat"),
-                centerTitle: true,
-              ),
-              body: Column(
-                children: <Widget>[
-                  getSearchBar(),
-                  Expanded(
-                    child: ListView.builder(
-                        itemCount: list?.length,
-                        itemBuilder: (context, index) {
-                          if (list == null) return Text('ERROR');
-                          return GymCard(item: list![index]);
-                        }),
-                  )
-                ],
-              ));
-        },
-      ),
+      child: Scaffold(
+          appBar: AppBar(
+            title: Text("Sweat"),
+            centerTitle: true,
+          ),
+          body: Column(
+            children: <Widget>[
+              getSearchBar(),
+              Expanded(
+                child: ListView.builder(
+                    itemCount: list == null ? 0 : list!.length,
+                    itemBuilder: (context, index) {
+                      if (list == null) return Container();
+                      return GymCard(item: list![index]);
+                    }),
+              )
+            ],
+          )),
     );
   }
 
@@ -68,12 +67,11 @@ class _ListadoScreenState extends State<ListadoScreen> {
     );
   }
 
-
   searchGym(String search) {
 
     if (this.list == null) return;
 
-    final listaFiltrada = this.list!.where((gimnasio) {
+    final listaFiltrada = this.originalList!.where((gimnasio) {
       final nombre = gimnasio.nombre.toLowerCase();
       final searchToLower = search.toLowerCase();
 
