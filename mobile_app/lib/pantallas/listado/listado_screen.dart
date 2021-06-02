@@ -12,6 +12,12 @@ class ListadoScreen extends StatefulWidget {
 class _ListadoScreenState extends State<ListadoScreen> {
   List<GimnasioList>? list;
 
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   Future<bool> getData() async {
     list = await GimnasioService.getList();
     return true;

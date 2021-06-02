@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/localization/form_builder_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:mobile_app/_services/storage_service.dart';
 import 'package:mobile_app/pantallas/auth/login_screen.dart';
+import 'package:mobile_app/pantallas/listado/listado_screen.dart';
 
 import '_services/_base.dart';
 
@@ -29,9 +32,40 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class AuthenticationWrapper extends StatelessWidget {
+class AuthenticationWrapper extends StatefulWidget {
+  @override
+  _AuthenticationWrapperState createState() => _AuthenticationWrapperState();
+}
+
+class _AuthenticationWrapperState extends State<AuthenticationWrapper> {
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      checkLogin();
+    });
+  }
+
+  Future<void> checkLogin() async {
+    final id = await StorageService.getId();
+    print('ID: ' + (id ?? '0'));
+
+    if (id != null) {
+      Navigator.push(context, MaterialPageRoute(builder: (_) => ListadoScreen()));
+      return;
+    }
+
+    Navigator.push(context, MaterialPageRoute(builder: (_) => LoginScreen()));
+  }
+
+
   @override
   Widget build(BuildContext context) {
-    return new LoginScreen();
+    return SpinKitRipple(
+      color: Colors.deepOrange,
+      size: 300.0,
+    );
   }
 }

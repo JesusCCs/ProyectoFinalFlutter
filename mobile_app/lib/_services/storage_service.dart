@@ -9,10 +9,18 @@ class StorageService {
   static FlutterSecureStorage secureStorage = FlutterSecureStorage();
 
   static Future<void> setSession(session) async {
-    await secureStorage.write(key: USER_ID, value: session["Id"]);
-    await secureStorage.write(key: TOKEN_KEY, value: session["AccessToken"]);
+    await secureStorage.write(key: USER_ID, value: session["id"]);
+    await secureStorage.write(key: TOKEN_KEY, value: session["accessToken"]);
     await secureStorage.write(
-        key: REFRESH_TOKEN_KEY, value: session["RefreshToken"]);
+        key: REFRESH_TOKEN_KEY, value: session["refreshToken"]);
+  }
+
+  static Future<void> setTokens(tokens) async {
+    print("SET TOKENS");
+    print(tokens);
+    await secureStorage.write(key: TOKEN_KEY, value: tokens["accessToken"]);
+    await secureStorage.write(
+        key: REFRESH_TOKEN_KEY, value: tokens["refreshToken"]);
   }
 
   static Future<String?> getAccessToken() async {
