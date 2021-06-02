@@ -11,6 +11,7 @@ abstract class Base {
   static init() {
     dio.interceptors.add(InterceptorsWrapper(onRequest: (options, handler) async {
       print("REQUEST---");
+      print(options.baseUrl);
 
       // Se mantiene el sistema de enviar token de seguridad, aunque no es necesario
       // * ver nota de más abajo, en 'onError' *
@@ -23,6 +24,8 @@ abstract class Base {
 
       return handler.next(response);
     }, onError: (DioError e, handler) async {
+      print("ERROR--");
+      print(e.response);
 
       // Aquí tendría que haber sistema de Refresh Tokens. Por falta de tiempo
       // se abandona esa funcionalidad y el backend está marcado en permitir

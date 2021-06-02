@@ -12,7 +12,6 @@ class ListadoScreen extends StatefulWidget {
 class _ListadoScreenState extends State<ListadoScreen> {
   List<GimnasioList>? list;
 
-
   @override
   void initState() {
     super.initState();
@@ -29,6 +28,7 @@ class _ListadoScreenState extends State<ListadoScreen> {
       child: FutureBuilder<bool>(
         future: getData(),
         builder: (context, snapshot) {
+          print(snapshot);
           if (!snapshot.hasData)
             return SpinKitRipple(
               color: Colors.deepOrange,

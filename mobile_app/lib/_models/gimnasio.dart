@@ -3,7 +3,7 @@ class GimnasioList {
   String logo;
   String nombre;
   String descripcion;
-  double tarifa;
+  dynamic tarifa;
 
   GimnasioList(
       {required this.id,
@@ -29,7 +29,7 @@ class GimnasioDetails {
   String nombre;
   String descripcion;
   String direccion;
-  double tarifa;
+  dynamic tarifa;
 
   GimnasioDetails({
     required this.id,
