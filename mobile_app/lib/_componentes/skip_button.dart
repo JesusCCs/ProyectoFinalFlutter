@@ -5,8 +5,9 @@ import 'package:mobile_app/_themes/colors.dart';
 
 class SkipButton extends StatefulWidget {
   final onSkip;
+  final waitInSeconds;
 
-  const SkipButton({required this.onSkip});
+  const SkipButton({required this.onSkip, required this.waitInSeconds});
 
   @override
   _SkipButtonState createState() => _SkipButtonState();
@@ -24,7 +25,7 @@ class _SkipButtonState extends State<SkipButton> {
   }
 
   void makeTimer() {
-    counter = 5;
+    counter = widget.waitInSeconds;
 
     timer = Timer.periodic(Duration(seconds: 1), (_) {
       if (counter > 0)

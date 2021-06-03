@@ -29,9 +29,9 @@ class _AnuncioScreenState extends State<AnuncioScreen> {
         future: getData(),
         builder: (context, snapshot) {
           if (!snapshot.hasData)
-            return SpinKitRipple(
-              color: Colors.deepOrange,
-              size: 300.0,
+            return Container(
+              decoration: BoxDecoration(color: Colors.white),
+              child:  SpinKitCircle(color: Colors.deepOrange, size: 100.0),
             );
 
           return anuncio == null ? ListadoScreen() : Container(
@@ -57,12 +57,14 @@ class _AnuncioScreenState extends State<AnuncioScreen> {
   }
 
   Widget getSkip() {
-    return SkipButton(onSkip: skip);
+    return SkipButton(onSkip: skip, waitInSeconds: 5);
   }
 
   Future skip(bool notSkip) async {
       if (notSkip) return;
 
+      await AnuncioService.anucioVisto(anuncio!.id);
 
+      setState(() => this.anuncioVisto = true);
   }
 }

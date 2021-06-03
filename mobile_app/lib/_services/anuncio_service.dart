@@ -1,4 +1,5 @@
 import 'package:mobile_app/_models/anuncio.dart';
+import 'package:mobile_app/_services/error_service.dart';
 import 'package:mobile_app/_services/storage_service.dart';
 import '_base.dart';
 
@@ -18,10 +19,14 @@ abstract class AnuncioService {
   }
 
   /// Manda aviso al servidor de que el usuario acaba de ver el anuncio
+  /// No importa la respuesta en este caso. Al usuario en la app no le
+  /// afecta que en el servidor se haya gestionado bien la solicitud
   static Future<void> anucioVisto(String anuncioId) async {
     final id = await StorageService.getId();
 
-    final response = await Base.dio.put('/anuncios/');
+    await Base.dio.put('/anuncios/$anuncioId/visto', data: {
+      'UsuarioId': id
+    }).catchError((e) => ErrorService.dio(e));
 
   }
 }
