@@ -21,9 +21,9 @@ class _VideoState extends State<Video> {
 
   @override
   void initState() {
-    _controller = VideoPlayerController.network(
-        'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4');
+    _controller = VideoPlayerController.network(widget.recurso);
     print("RECURSO-------");
+    // 'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4'
     print(widget.recurso);
 
     _initializeVideoPlayerFuture = _controller.initialize();
@@ -38,9 +38,9 @@ class _VideoState extends State<Video> {
       // acción que nos dan por parámetro
       _controller.addListener(() {
         print(_controller.value.position);
-        if (_controller.value.position == _controller.value.duration) {
-          widget.onEnded();
-        }
+        // if (_controller.value.position == _controller.value.duration) {
+        //   widget.onEnded();
+        // }
       });
     });
   }
