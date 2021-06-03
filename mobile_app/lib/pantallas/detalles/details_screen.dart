@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:mobile_app/_componentes/loading.dart';
 import 'package:mobile_app/_models/gimnasio.dart';
 import 'package:mobile_app/_services/gimnasio_service.dart';
 import 'package:mobile_app/_themes/app_text.dart';
@@ -29,10 +30,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
         future: getData(),
         builder: (context, snapshot) {
           if (!snapshot.hasData)
-            return SpinKitRipple(
-              color: Colors.deepOrange,
-              size: 300.0,
-            );
+            return Loading();
           return Scaffold(
             backgroundColor: ThemeColors.darkBg,
             body: getBody(),

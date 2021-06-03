@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/localization/form_builder_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:mobile_app/_componentes/loading.dart';
 import 'package:mobile_app/_services/storage_service.dart';
 import 'package:mobile_app/_themes/colors.dart';
 import 'package:mobile_app/pantallas/anuncio_screen.dart';
@@ -63,13 +64,7 @@ class _AuthenticatorWrapperState extends State<AuthenticatorWrapper> {
         future: getSession(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
-            return Container(
-              decoration: BoxDecoration(color: Colors.white),
-              child: SpinKitRipple(
-                color: Colors.deepOrange,
-                size: 300.0,
-              ),
-            );
+            return Loading();
           }
 
           return id == null ? LoginScreen() : AnuncioScreen();

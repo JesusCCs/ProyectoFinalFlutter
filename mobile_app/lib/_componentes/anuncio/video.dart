@@ -3,6 +3,8 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:mobile_app/_componentes/anuncio/skip_button.dart';
 import 'package:video_player/video_player.dart';
 
+import '../loading.dart';
+
 class Video extends StatefulWidget {
   final String recurso;
   final onEnded;
@@ -69,10 +71,7 @@ class _VideoState extends State<Video> {
                   child: SkipButton(onSkip: widget.onSkip, waitInSeconds: 5))
             ]);
           } else {
-            return Container(
-              decoration: BoxDecoration(color: Colors.white),
-              child: SpinKitCircle(color: Colors.deepOrange, size: 100.0),
-            );
+            return Loading();
           }
         },
       ),

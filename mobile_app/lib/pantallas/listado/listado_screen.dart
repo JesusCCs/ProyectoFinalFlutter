@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app/_componentes/list/gym_card.dart';
 import 'package:mobile_app/_componentes/list/search_bar.dart';
+import 'package:mobile_app/_componentes/loading.dart';
 import 'package:mobile_app/_models/gimnasio.dart';
 import 'package:mobile_app/_services/error_service.dart';
 import 'package:mobile_app/_services/gimnasio_service.dart';
@@ -49,7 +50,7 @@ class _ListadoScreenState extends State<ListadoScreen> {
                 child: ListView.builder(
                     itemCount: list == null ? 0 : list!.length,
                     itemBuilder: (context, index) {
-                      if (list == null) return Container();
+                      if (list == null) return Loading();
                       return GymCard(item: list![index]);
                     }),
               )
