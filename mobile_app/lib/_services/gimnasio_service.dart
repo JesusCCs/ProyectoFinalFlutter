@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:mobile_app/_models/gimnasio.dart';
 import '_base.dart';
 import 'error_service.dart';

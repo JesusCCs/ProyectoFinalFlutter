@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:mobile_app/_services/error_service.dart';
 import 'package:mobile_app/_services/storage_service.dart';

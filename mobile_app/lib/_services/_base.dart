@@ -1,8 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:mobile_app/_services/storage_service.dart';
 
-import 'auth_service.dart';
-
 abstract class Base {
   static const URL = "http://10.0.2.2:57976";
 
