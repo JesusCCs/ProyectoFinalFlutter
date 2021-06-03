@@ -14,6 +14,7 @@ class StorageService {
     await secureStorage.write(key: TOKEN_KEY, value: session["accessToken"]);
     await secureStorage.write(
         key: REFRESH_TOKEN_KEY, value: session["refreshToken"]);
+    print('CHECK SESSION: ${await getId()}');
   }
 
   static Future<void> setTokens(tokens) async {

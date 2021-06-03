@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:mobile_app/_componentes/gym_card.dart';
 import 'package:mobile_app/_componentes/search_bar.dart';
 import 'package:mobile_app/_models/gimnasio.dart';

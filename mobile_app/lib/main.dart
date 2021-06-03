@@ -10,15 +10,7 @@ import '_services/_base.dart';
 
 Future<void> main() async {
   Base.init();
-  dynamic id;
-
-  try {
-    id = await StorageService.getId();
-  } catch(e) {
-    id = null;
-  }
-
-  runApp(MyApp(id: id));
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -41,23 +33,49 @@ class MyApp extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate,
       ],
       debugShowCheckedModeBanner: false,
-      home: AuthenticationWrapper(id: id),
+      home: AuthenticatorWrapper(),
     );
   }
 }
 
-class AuthenticationWrapper extends StatelessWidget {
 
-  final String? id;
-  const AuthenticationWrapper({Key? key, this.id}) : super(key: key);
+class AuthenticatorWrapper extends StatefulWidget {
+
+  @override
+  _AuthenticatorWrapperState createState() => _AuthenticatorWrapperState();
+}
+
+class _AuthenticatorWrapperState extends State<AuthenticatorWrapper> {
+
+  String? id;
+
+  @override
+  void initState() {
+    super.initState();
+    getSession();
+  }
+
+  Future<bool> getSession() async {
+    id = await StorageService.getId();
+    return true;
+  }
+
 
   @override
   Widget build(BuildContext context) {
+    return Container(
+      child: FutureBuilder<bool>(
+        future: getSession(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return Text('cargando...');
+          }
 
-    if (id == null) {
-      return LoginScreen();
-    }
-
-    return ListadoScreen();
+          return id == null ? LoginScreen() : ListadoScreen();
+        },
+      ),
+    );
   }
+
+
 }

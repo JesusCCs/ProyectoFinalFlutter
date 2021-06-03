@@ -20,7 +20,7 @@ abstract class Base {
       return handler.next(options);
     }, onResponse: (response, handler) {
       print("RESPONSE--");
-      print(response.data);
+      //print(response.data);
 
       return handler.next(response);
     }, onError: (DioError e, handler) async {
