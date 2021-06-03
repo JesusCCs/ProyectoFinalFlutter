@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_app/_componentes/loading.dart';
 import 'package:mobile_app/_models/gimnasio.dart';
@@ -44,13 +45,11 @@ class _DetailsScreenState extends State<DetailsScreen> {
     return SingleChildScrollView(
       child: Stack(
         children: <Widget>[
-          Container(
-            width: double.infinity,
-            height: size.height * 0.5,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: NetworkImage(item.logo), fit: BoxFit.cover),
-            ),
+          CachedNetworkImage(
+            imageUrl: item.logo,
+            progressIndicatorBuilder: (context, url, downloadProgress) =>
+                CircularProgressIndicator(value: downloadProgress.progress),
+            errorWidget: (context, url, error) => Icon(Icons.error),
           ),
           Container(
             margin: EdgeInsets.only(top: size.height * 0.45),

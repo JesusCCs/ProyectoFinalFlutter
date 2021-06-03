@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_app/_models/gimnasio.dart';
 import 'package:mobile_app/pantallas/detalles/details_screen.dart';
@@ -20,7 +21,15 @@ class GymCard extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              AspectRatio(aspectRatio: 1.0, child: Image.network(item.logo)),
+              AspectRatio(
+                  aspectRatio: 1.0,
+                  child: CachedNetworkImage(
+                    imageUrl: item.logo,
+                    progressIndicatorBuilder: (context, url, downloadProgress) =>
+                        CircularProgressIndicator(value: downloadProgress.progress),
+                    errorWidget: (context, url, error) => Icon(Icons.error),
+                  )
+              ),
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(20.0, 0.0, 2.0, 0.0),
