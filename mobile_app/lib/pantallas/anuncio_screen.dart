@@ -1,9 +1,7 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:mobile_app/_componentes/skip_button.dart';
-import 'package:mobile_app/_componentes/video.dart';
+import 'package:mobile_app/_componentes/anuncio/imagen.dart';
+import 'package:mobile_app/_componentes/anuncio/video.dart';
 import 'package:mobile_app/_models/anuncio.dart';
 import 'package:mobile_app/_services/anuncio_service.dart';
 import 'package:mobile_app/pantallas/listado/listado_screen.dart';
@@ -42,32 +40,28 @@ class _AnuncioScreenState extends State<AnuncioScreen> {
                     ? ListadoScreen()
                     : Container(
                         decoration: BoxDecoration(color: Colors.white),
-                        child: Stack(
-                          children: getContent(screenWidth),
-                        ),
+                        child: getContent(screenWidth),
                       );
               },
             ),
     );
   }
 
-  List<Widget> getContent(screenWidth) {
+  Widget getContent(screenWidth) {
     if (anuncio!.tipo == Anuncio.IMAGEN || anuncio!.tipo == Anuncio.GIF) {
-      return <Widget>[
-        Center(child: Image.network(anuncio!.ruta, width: screenWidth)),
-        Positioned(
-            bottom: 40,
-            right: -4,
-            child: SkipButton(onSkip: skip, waitInSeconds: 5))
-      ];
+      return Imagen(
+        recurso: anuncio!.ruta,
+        onSkip: skip,
+        screenWidth: screenWidth,
+      );
     }
 
-    return <Widget>[
-      Video(recurso: anuncio!.ruta, onEnded: onEnded, onSkip: skip)
-    ];
+    return Video(recurso: anuncio!.ruta, onEnded: onEnded, onSkip: skip);
   }
 
-  Future skip(bool notSkip) async {
+  /// Si nos pulsan sobre el botón de saltar. Tendremos que irnos a la pantalla
+  /// pincipal.
+  skip(bool notSkip) async {
     if (notSkip) return;
 
     await AnuncioService.anucioVisto(anuncio!.id);

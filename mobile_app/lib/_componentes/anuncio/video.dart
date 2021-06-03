@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:mobile_app/_componentes/skip_button.dart';
+import 'package:mobile_app/_componentes/anuncio/skip_button.dart';
 import 'package:video_player/video_player.dart';
 
 class Video extends StatefulWidget {

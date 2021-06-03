@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_app/_componentes/gym_card.dart';
-import 'package:mobile_app/_componentes/search_bar.dart';
+import 'package:mobile_app/_componentes/list/gym_card.dart';
+import 'package:mobile_app/_componentes/list/search_bar.dart';
 import 'package:mobile_app/_models/gimnasio.dart';
 import 'package:mobile_app/_services/error_service.dart';
 import 'package:mobile_app/_services/gimnasio_service.dart';

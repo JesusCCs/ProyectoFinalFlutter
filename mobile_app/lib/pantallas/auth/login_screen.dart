@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:mobile_app/_componentes/form_button.dart';
-import 'package:mobile_app/_componentes/navigation_link.dart';
+import 'package:mobile_app/_componentes/form/form_button.dart';
+import 'package:mobile_app/_componentes/form/navigation_link.dart';
 import 'package:mobile_app/_services/auth_service.dart';
 import 'package:mobile_app/_services/error_service.dart';
 import 'package:mobile_app/pantallas/auth/forgot_screen.dart';
