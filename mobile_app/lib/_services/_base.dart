@@ -11,7 +11,7 @@ abstract class Base {
   static init() {
     dio.interceptors.add(InterceptorsWrapper(onRequest: (options, handler) async {
       print("REQUEST---");
-      print(options.baseUrl);
+      print(options.uri);
 
       // Se mantiene el sistema de enviar token de seguridad, aunque no es necesario
       // * ver nota de más abajo, en 'onError' *
@@ -20,7 +20,7 @@ abstract class Base {
       return handler.next(options);
     }, onResponse: (response, handler) {
       print("RESPONSE--");
-      //print(response.data);
+      print(response.data);
 
       return handler.next(response);
     }, onError: (DioError e, handler) async {

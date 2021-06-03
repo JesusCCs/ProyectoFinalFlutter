@@ -37,6 +37,7 @@ dependencies:
   flutter_secure_storage: ^4.2.0
   cool_alert: ^1.1.0
   network_to_file_image: ^3.0.0
+  video_player: ^2.1.4
 
 dev_dependencies:
   flutter_test:

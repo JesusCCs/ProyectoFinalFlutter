@@ -3,6 +3,7 @@ import 'package:flutter_form_builder/localization/form_builder_localizations.dar
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:mobile_app/_services/storage_service.dart';
+import 'package:mobile_app/pantallas/anuncio_screen.dart';
 import 'package:mobile_app/pantallas/auth/login_screen.dart';
 import 'package:mobile_app/pantallas/listado/listado_screen.dart';
 
@@ -52,11 +53,12 @@ class _AuthenticatorWrapperState extends State<AuthenticatorWrapper> {
   @override
   void initState() {
     super.initState();
-    getSession();
   }
 
   Future<bool> getSession() async {
     id = await StorageService.getId();
+    print("SESSION: $id");
+
     return true;
   }
 
@@ -68,10 +70,13 @@ class _AuthenticatorWrapperState extends State<AuthenticatorWrapper> {
         future: getSession(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
-            return Text('cargando...');
+            return SpinKitRipple(
+              color: Colors.deepOrange,
+              size: 300.0,
+            );
           }
 
-          return id == null ? LoginScreen() : ListadoScreen();
+          return id == null ? LoginScreen() : AnuncioScreen();
         },
       ),
     );
