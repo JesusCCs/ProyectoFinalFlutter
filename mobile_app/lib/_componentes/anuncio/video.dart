@@ -22,10 +22,6 @@ class _VideoState extends State<Video> {
   @override
   void initState() {
     _controller = VideoPlayerController.network(widget.recurso);
-    print("RECURSO-------");
-    // 'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4'
-    print(widget.recurso);
-
     _initializeVideoPlayerFuture = _controller.initialize();
 
     super.initState();
@@ -37,10 +33,9 @@ class _VideoState extends State<Video> {
       // Controlamos el momento en el que se termina de ver para llamar a la
       // acción que nos dan por parámetro
       _controller.addListener(() {
-        print(_controller.value.position);
-        // if (_controller.value.position == _controller.value.duration) {
-        //   widget.onEnded();
-        // }
+        if (_controller.value.position == _controller.value.duration) {
+          widget.onEnded();
+        }
       });
     });
   }
