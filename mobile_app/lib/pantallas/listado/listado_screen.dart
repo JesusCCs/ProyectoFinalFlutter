@@ -1,10 +1,14 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_app/_componentes/list/gym_card.dart';
 import 'package:mobile_app/_componentes/loading.dart';
 import 'package:mobile_app/_models/gimnasio.dart';
+import 'package:mobile_app/_services/auth_service.dart';
 import 'package:mobile_app/_services/error_service.dart';
 import 'package:mobile_app/_services/gimnasio_service.dart';
+import 'package:mobile_app/_services/storage_service.dart';
 import 'package:mobile_app/_themes/colors.dart';
+import 'package:mobile_app/pantallas/auth/login_screen.dart';
 
 class ListadoScreen extends StatefulWidget {
   @override
@@ -47,7 +51,7 @@ class _ListadoScreenState extends State<ListadoScreen> {
     setState(() {
       this.name = name;
       this.description = description;
-      this.price =  price;
+      this.price = price;
       this.list = listaFiltrada;
     });
   }
@@ -94,6 +98,20 @@ class _ListadoScreenState extends State<ListadoScreen> {
           appBar: AppBar(
             title: Text("Sweat"),
             centerTitle: true,
+            actions: <Widget>[
+              Padding(
+                  padding: EdgeInsets.only(right: 20.0),
+                  child: GestureDetector(
+                    onTap: () async {
+                      await StorageService.clearSession();
+                      Navigator.of(context).pushAndRemoveUntil(
+                        CupertinoPageRoute(builder: (context) => LoginScreen()),
+                        (_) => false,
+                      );
+                    },
+                    child: Icon(Icons.logout),
+                  )),
+            ],
           ),
           floatingActionButton: FloatingActionButton(
             onPressed: () {
@@ -112,7 +130,9 @@ class _ListadoScreenState extends State<ListadoScreen> {
                     itemCount: list == null ? 0 : list!.length,
                     itemBuilder: (context, index) {
                       if (list == null) return Loading();
-                      return GymCard(item: list![index], descriptionSearch: this.description);
+                      return GymCard(
+                          item: list![index],
+                          descriptionSearch: this.description);
                     }),
               )
             ],
@@ -210,19 +230,18 @@ class _ListadoScreenState extends State<ListadoScreen> {
 
   getPriceRange() {
     return Container(
-      margin: const EdgeInsets.fromLTRB(0, 7, 0, 0),
-      child: Slider(
-        value: price,
-        min: 0,
-        max: 70,
-        divisions: 70,
-        label: 'Tarifa desde ${price.round().toString()} €',
-        onChanged: (double value) {
-          searchGym(controlName.text, description: description, price: value);
-        },
-        activeColor: ThemeColors.textHighlighted,
-        inactiveColor: ThemeColors.darkBgWithOpacity,
-      )
-    );
+        margin: const EdgeInsets.fromLTRB(0, 7, 0, 0),
+        child: Slider(
+          value: price,
+          min: 0,
+          max: 70,
+          divisions: 70,
+          label: 'Tarifa desde ${price.round().toString()} €',
+          onChanged: (double value) {
+            searchGym(controlName.text, description: description, price: value);
+          },
+          activeColor: ThemeColors.textHighlighted,
+          inactiveColor: ThemeColors.darkBgWithOpacity,
+        ));
   }
 }

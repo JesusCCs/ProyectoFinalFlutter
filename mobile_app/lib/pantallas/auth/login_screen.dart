@@ -1,9 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:mobile_app/_componentes/form/form_button.dart';
 import 'package:mobile_app/_componentes/form/navigation_link.dart';
 import 'package:mobile_app/_services/auth_service.dart';
 import 'package:mobile_app/_services/error_service.dart';
+import 'package:mobile_app/pantallas/anuncio_screen.dart';
 import 'package:mobile_app/pantallas/auth/forgot_screen.dart';
 import 'package:mobile_app/pantallas/auth/register_screen.dart';
 import 'package:mobile_app/pantallas/listado/listado_screen.dart';
@@ -57,7 +59,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
     _formKey.currentState!.reset();
 
-    Navigator.push(context, MaterialPageRoute(builder: (_) => ListadoScreen()));
+    Navigator.of(context).pushAndRemoveUntil(
+      CupertinoPageRoute(builder: (context) => AnuncioScreen()),
+          (_) => false,
+    );
   }
 
   @override
