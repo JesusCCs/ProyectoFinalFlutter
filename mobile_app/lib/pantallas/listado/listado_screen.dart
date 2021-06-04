@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_app/_componentes/list/gym_card.dart';
-import 'package:mobile_app/_componentes/list/search_bar.dart';
 import 'package:mobile_app/_componentes/loading.dart';
 import 'package:mobile_app/_models/gimnasio.dart';
 import 'package:mobile_app/_services/error_service.dart';
 import 'package:mobile_app/_services/gimnasio_service.dart';
+import 'package:mobile_app/_themes/colors.dart';
 
 class ListadoScreen extends StatefulWidget {
   @override
@@ -12,7 +12,6 @@ class ListadoScreen extends StatefulWidget {
 }
 
 class _ListadoScreenState extends State<ListadoScreen> {
-
   /// Se tienen dos listas. Una de ellas (list) es que se muestra
   /// y el resultado de aplicar los filtros. La otra (originalList) es la
   /// que tiene los datos que se trajeron incialmente del servidor y a la
@@ -27,6 +26,8 @@ class _ListadoScreenState extends State<ListadoScreen> {
   final controlDescription = TextEditingController();
 
   String search = '';
+  String description = '';
+  String price = '';
 
   searchGym(String name, {String description = '', var price = 0}) {
     if (this.list == null) return;
@@ -38,12 +39,15 @@ class _ListadoScreenState extends State<ListadoScreen> {
       final descripcion = gimnasio.descripcion.toLowerCase();
       final descriptionToLower = description.toLowerCase();
 
-      return nombre.contains(searchToLower)
-          && descripcion.contains(descriptionToLower) && gimnasio.tarifa >= price;
+      return nombre.contains(searchToLower) &&
+          descripcion.contains(descriptionToLower) &&
+          gimnasio.tarifa >= price;
     }).toList();
 
     setState(() {
       this.search = name;
+      this.description = description;
+      this.price =  price.toString();
       this.list = listaFiltrada;
     });
   }
@@ -108,7 +112,7 @@ class _ListadoScreenState extends State<ListadoScreen> {
                     itemCount: list == null ? 0 : list!.length,
                     itemBuilder: (context, index) {
                       if (list == null) return Loading();
-                      return GymCard(item: list![index]);
+                      return GymCard(item: list![index], descriptionSearch: this.description);
                     }),
               )
             ],
@@ -120,7 +124,7 @@ class _ListadoScreenState extends State<ListadoScreen> {
     return Column(
       children: [
         getNameSearch(),
-        show ? getNameSearch() : Container(),
+        show ? getDescriptionSearch() : Container(),
         show ? getNameSearch() : Container(),
       ],
     );
@@ -149,7 +153,7 @@ class _ListadoScreenState extends State<ListadoScreen> {
                   child: Icon(Icons.close, color: style.color),
                   onTap: () {
                     controlName.clear();
-                    searchGym('');
+                    searchGym('', description: controlName.text, price: 0);
                     FocusScope.of(context).requestFocus(FocusNode());
                   },
                 )
@@ -159,45 +163,47 @@ class _ListadoScreenState extends State<ListadoScreen> {
           border: InputBorder.none,
         ),
         style: style,
-        onChanged: (search) => searchGym(search),
+        onChanged: (search) =>
+            searchGym(search, description: controlDescription.text),
       ),
     );
   }
 
   getDescriptionSearch() {
-    final styleActive = TextStyle(color: Colors.black);
-    final styleHint = TextStyle(color: Colors.black54);
-    final style = search.isEmpty ? styleHint : styleActive;
+    final styleActive = TextStyle(color: ThemeColors.textHighlighted);
+    final styleHint = TextStyle(color: ThemeColors.darkBgWithOpacity);
+    final style = description.isEmpty ? styleHint : styleActive;
 
     return Container(
       height: 42,
-      margin: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+      margin: const EdgeInsets.fromLTRB(16, 0, 16, 0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
         color: Colors.white,
-        border: Border.all(color: Colors.black26),
+        border: Border.all(color: style.color!),
       ),
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: TextField(
-        controller: controlName,
+        controller: controlDescription,
         decoration: InputDecoration(
           icon: Icon(Icons.search, color: style.color),
-          suffixIcon: search.isNotEmpty
+          suffixIcon: description.isNotEmpty
               ? GestureDetector(
-            child: Icon(Icons.close, color: style.color),
-            onTap: () {
-              controlDescription.clear();
-              searchGym('');
-              FocusScope.of(context).requestFocus(FocusNode());
-            },
-          )
+                  child: Icon(Icons.close, color: style.color),
+                  onTap: () {
+                    controlDescription.clear();
+                    searchGym(controlName.text, price: 0);
+                    FocusScope.of(context).requestFocus(FocusNode());
+                  },
+                )
               : null,
           hintText: 'Palabras claves de la descripción',
           hintStyle: style,
           border: InputBorder.none,
         ),
         style: style,
-        onChanged: searchGym,
+        onChanged: (description) =>
+            searchGym(controlName.text, description: description),
       ),
     );
   }

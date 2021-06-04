@@ -4,6 +4,12 @@ import 'package:video_player/video_player.dart';
 
 import '../loading.dart';
 
+/// Se muestra un video a partir de una URL dada (recurso). Contiene también
+/// el objeto de SkipButton para sincronizar el renderizado de éste con la
+/// carga del vídeo.
+///
+/// También hace uso de una función que se debe pasar por parámetro que es onEnded
+/// que sirve para realizar la acción que se ejecutará cuando finalice el video
 class Video extends StatefulWidget {
   final String recurso;
   final onEnded;

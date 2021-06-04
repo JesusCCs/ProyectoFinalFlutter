@@ -3,10 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:mobile_app/_models/gimnasio.dart';
 import 'package:mobile_app/pantallas/detalles/details_screen.dart';
 
+/// Pequeña carta con diseño sencillo que muestra una imagen a la izquierda
+/// y el texto con información relevante a la derecha
 class GymCard extends StatelessWidget {
   final GimnasioList item;
+  final String descriptionSearch;
 
-  GymCard({required this.item});
+  GymCard({required this.item, required this.descriptionSearch});
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +54,7 @@ class GymCard extends StatelessWidget {
 
   Widget getBody() {
     return Expanded(
-      flex: 2,
+      flex: 3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -65,15 +68,7 @@ class GymCard extends StatelessWidget {
             ),
           ),
           const Padding(padding: EdgeInsets.only(bottom: 2.0)),
-          Text(
-            item.descripcion,
-            maxLines: 3,
-            overflow: TextOverflow.ellipsis,
-            style: const TextStyle(
-              fontSize: 13.0,
-              color: Colors.black54,
-            ),
-          ),
+          item.description(descriptionSearch),
         ],
       ),
     );

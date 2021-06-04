@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+/// Pequeña clase para encapsular el estilo del botón que se usa en los formularios
 class FormButton extends StatelessWidget {
   final String text;
   final void Function()? onPressed;

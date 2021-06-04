@@ -3,6 +3,11 @@ import 'package:mobile_app/_componentes/anuncio/skip_button.dart';
 
 import '../loading.dart';
 
+/// Muestra una imagen a partir de una URL. Además, contiene el botón de saltar
+/// anuncion (SkipButton). Esto es necesario tenerlo a la misma vez en un solo
+/// componente porque hay que sincronizar la carga de la imagen con el renderizado
+/// del botón. Si se hiciese de otra manera, el botón comenzaría la cuenta atrás
+/// antes de que la imagen estuviese completamente visible y quedaría extraño
 class Imagen extends StatefulWidget {
   final String recurso;
   final double screenWidth;

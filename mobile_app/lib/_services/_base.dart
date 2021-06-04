@@ -1,11 +1,22 @@
 import 'package:dio/dio.dart';
 import 'package:mobile_app/_services/storage_service.dart';
 
+/// Clase con un solo estado estático que es el objeto que es capaz de realizar
+/// las peticiones al servidor.
+///
+/// Además de ese objeto estático tiene una constante donde se indica la url a
+/// la que hay que apuntar. Al estar usando un emulador de android, esta
+/// URL debe ser 10.0.2.2, que es la que apunta al localhost del ordenador
+/// en el que se ejecuta el emulador. El puerto es el mismo que si estuviesemos
+/// en el propio local, luego no hay variación ahí.
 abstract class Base {
   static const URL = "http://10.0.2.2:57976";
 
   static Dio dio = Dio(new BaseOptions(baseUrl: URL));
 
+  /// Método que se debe llamar al inciio de la app para añadir los interceptores
+  /// al objeto Dio. La intención era tener un sistema de tokens y refresh tokens
+  /// tal y como se ha logrado en el proyecto de Angular
   static init() {
     dio.interceptors.add(InterceptorsWrapper(onRequest: (options, handler) async {
       print("REQUEST---");
@@ -33,6 +44,8 @@ abstract class Base {
     }));
   }
 
+  /// Método cuya intención era realizar una nueva petición con la anterior
+  /// que se había rechazado al caducarse el token. Ahora mismo no tiene uso
   static Future<Response<dynamic>> retry(RequestOptions requestOptions) async {
     final token = await StorageService.getAccessToken();
 
@@ -50,6 +63,7 @@ abstract class Base {
         options: options);
   }
 
+  /// Método de soporte para setear la autorización
   static Future<void> setToken(RequestOptions options) async {
     final token = await StorageService.getAccessToken();
 

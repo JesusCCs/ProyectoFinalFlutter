@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:mobile_app/_themes/colors.dart';
 
+/// Botón que se le pasa el tiempo que hay que esperar (una cuenta atrás en segundos)
+/// y que no permite que se ejecute la acción hasta que haya pasado dicho tiempo
 class SkipButton extends StatefulWidget {
   final onSkip;
   final waitInSeconds;

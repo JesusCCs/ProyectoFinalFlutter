@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+/// Una clase de apoyo para gestionar los enalces que nos llevan a toras apantallas
+/// al inicio de la app. La intención era tener un componente que fuese similar
+/// al tag anchor de HTML
 class NavigationLink extends StatelessWidget {
   final String text;
   final StatefulWidget screen;
