@@ -25,9 +25,9 @@ class _ListadoScreenState extends State<ListadoScreen> {
   final controlName = TextEditingController();
   final controlDescription = TextEditingController();
 
-  String search = '';
+  String name = '';
   String description = '';
-  String price = '';
+  double price = 0;
 
   searchGym(String name, {String description = '', var price = 0}) {
     if (this.list == null) return;
@@ -45,9 +45,9 @@ class _ListadoScreenState extends State<ListadoScreen> {
     }).toList();
 
     setState(() {
-      this.search = name;
+      this.name = name;
       this.description = description;
-      this.price =  price.toString();
+      this.price =  price;
       this.list = listaFiltrada;
     });
   }
@@ -125,15 +125,15 @@ class _ListadoScreenState extends State<ListadoScreen> {
       children: [
         getNameSearch(),
         show ? getDescriptionSearch() : Container(),
-        show ? getNameSearch() : Container(),
+        show ? getPriceRange() : Container(),
       ],
     );
   }
 
   getNameSearch() {
-    final styleActive = TextStyle(color: Colors.black);
-    final styleHint = TextStyle(color: Colors.black54);
-    final style = search.isEmpty ? styleHint : styleActive;
+    final styleActive = TextStyle(color: ThemeColors.textHighlighted);
+    final styleHint = TextStyle(color: ThemeColors.darkBgWithOpacity);
+    final style = name.isEmpty ? styleHint : styleActive;
 
     return Container(
       height: 42,
@@ -141,14 +141,14 @@ class _ListadoScreenState extends State<ListadoScreen> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
         color: Colors.white,
-        border: Border.all(color: Colors.black26),
+        border: Border.all(color: style.color!),
       ),
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: TextField(
         controller: controlName,
         decoration: InputDecoration(
           icon: Icon(Icons.search, color: style.color),
-          suffixIcon: search.isNotEmpty
+          suffixIcon: name.isNotEmpty
               ? GestureDetector(
                   child: Icon(Icons.close, color: style.color),
                   onTap: () {
@@ -164,7 +164,7 @@ class _ListadoScreenState extends State<ListadoScreen> {
         ),
         style: style,
         onChanged: (search) =>
-            searchGym(search, description: controlDescription.text),
+            searchGym(search, description: description, price: price),
       ),
     );
   }
@@ -203,8 +203,26 @@ class _ListadoScreenState extends State<ListadoScreen> {
         ),
         style: style,
         onChanged: (description) =>
-            searchGym(controlName.text, description: description),
+            searchGym(name, description: description, price: price),
       ),
+    );
+  }
+
+  getPriceRange() {
+    return Container(
+      margin: const EdgeInsets.fromLTRB(0, 7, 0, 0),
+      child: Slider(
+        value: price,
+        min: 0,
+        max: 70,
+        divisions: 70,
+        label: 'Tarifa desde ${price.round().toString()} €',
+        onChanged: (double value) {
+          searchGym(controlName.text, description: description, price: value);
+        },
+        activeColor: ThemeColors.textHighlighted,
+        inactiveColor: ThemeColors.darkBgWithOpacity,
+      )
     );
   }
 }
