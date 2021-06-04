@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:mobile_app/_themes/colors.dart';
 
 /// Clase para enapsular toda la información que el servidor manda cuando
 /// se requiren todos los gimnaios a mostrar en la pantalla del listado
@@ -10,11 +11,12 @@ class GimnasioList {
   String descripcion;
   dynamic tarifa;
 
-  GimnasioList({required this.id,
-    required this.logo,
-    required this.nombre,
-    required this.descripcion,
-    required this.tarifa});
+  GimnasioList(
+      {required this.id,
+      required this.logo,
+      required this.nombre,
+      required this.descripcion,
+      required this.tarifa});
 
   /// Método para parsear desde el json que nos llega del servidor a un objeto
   factory GimnasioList.fromJson(Map<String, dynamic> json) {
@@ -29,33 +31,53 @@ class GimnasioList {
   /// Método de apoyo para mostrar la descripción hasta donde se pueda
   /// (máx. 4 líneas configuradas, que es el tamaño donde se ve adecuadamente para
   /// el tamaño de la carta).
+  ///
   /// Si el parámetro que recibe no es nulo, se marca de color distintivo
   /// Esto se hace así, porque lo que reciba será las búsqueda que el usuario
   /// escribe en el filtro de Descripción
   Widget description(String descriptionSearch) {
-    if (descriptionSearch == '') return Text(
-      descripcion,
-      maxLines: 4,
-      overflow: TextOverflow.ellipsis,
-      style: const TextStyle(
-        fontSize: 14.0,
-        color: Colors.black54,
-      ),
-    );
+    if (descriptionSearch == '')
+      return Text(
+        descripcion,
+        maxLines: 4,
+        overflow: TextOverflow.ellipsis,
+        style: const TextStyle(
+          fontSize: 14.0,
+          color: Colors.black54,
+        ),
+      );
+
+    final inicio =
+        descripcion.toLowerCase().indexOf(descriptionSearch.toLowerCase());
+
+    if (inicio == -1) return Container();
+
+
+    final fin = inicio + descriptionSearch.length;
+
+    final max = 100;
+    final start = inicio - max < 0 ? 0 : max;
+
+    String prev = descripcion.substring(start, inicio);
+    prev = start > 0 ? '...' + prev : prev;
+    final highlight = descripcion.substring(inicio, fin);
+    final post = descripcion.substring(fin);
 
     return RichText(
+        maxLines: 4,
+        overflow: TextOverflow.ellipsis,
         text: TextSpan(
             style: const TextStyle(
               fontSize: 14.0,
               color: Colors.black54,
             ),
-          children: <TextSpan>[
-            TextSpan(),
-            TextSpan(),
-            TextSpan(),
-          ]
-        )
-    );
+            children: <TextSpan>[
+              TextSpan(text: prev),
+              TextSpan(
+                  text: highlight,
+                  style: TextStyle(color: ThemeColors.textHighlighted)),
+              TextSpan(text: post),
+            ]));
   }
 }
 
