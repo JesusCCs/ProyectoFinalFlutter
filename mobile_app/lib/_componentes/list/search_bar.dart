@@ -19,8 +19,31 @@ class SearchBar extends StatefulWidget {
 class _SearchBarState extends State<SearchBar> {
   final controller = TextEditingController();
 
+  var show = false;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    return Column(
+      children: [
+        getNameSearch(),
+        show ? getNameSearch() : Container(),
+        show ? getNameSearch() : Container(),
+      ],
+    );
+  }
+
+  showFilters() {
+    setState(() {
+      this.show = true;
+    });
+  }
+
+  getNameSearch() {
     final styleActive = TextStyle(color: Colors.black);
     final styleHint = TextStyle(color: Colors.black54);
     final style = widget.search.isEmpty ? styleHint : styleActive;
